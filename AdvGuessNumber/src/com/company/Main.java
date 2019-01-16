@@ -7,11 +7,10 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static String userName = Name(); //Asks for a name from the user
-    public  static int secretNumber = GenerateNumber(); //Generates number
-    public static int userGuessedNumber = GetGuess(); //Gets a number from the user
-    public static int userAttempt = 1; //Initializes the user attempt counter
-    public static int checkOut  = 0;// Used in IsUserValid function, output of
+    //public static String userName = Name(); //Asks for a name from the user
+   // public  static int secretNumber = GenerateNumber(); //Generates number
+   // public static int userGuessedNumber = GetGuess(); //Gets a number from the user
+   public static int userAttempt = 1; //Initializes the user attempt counter
     public static String checkIn;// Used in IsUserValid function, input of
 
     //Test for Name left empty
@@ -24,20 +23,28 @@ public class Main {
         CheckGuess(); //Runs the check guess function
     }
 
-    public static String Input(){
+    public static String Input(String prompt){
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Please input a number between 1-100");
+        System.out.println(prompt);
         String usrIn = scanner.nextLine();
         checkIn = usrIn;
-        IsUserValid();
+       // IsUserValid();
         return usrIn;
     }//Function that asks for the user input. Runs a check to make sure that the input is valid
 
-    public static int IntInput(){
+    public static int IntInput(String prompt2){
         int usrIntIn = 0;
-        Input();
-        usrIntIn = checkOut;
-        return usrIntIn;
+        while (true) {
+            try {
+                usrIntIn = Integer.parseInt(Input(prompt2));
+                return usrIntIn;
+            } catch (NumberFormatException ex) {
+                System.out.println("Invalid input");
+                continue;
+            }
+        }
+        //usrIntIn = checkOut;
+
     }//Calls to Input
 
     public static int GenerateNumber(){
@@ -48,13 +55,15 @@ public class Main {
 
     public static int GetGuess(){
         int usrGuessIn = 0;
-        usrGuessIn = IntInput();
-        int usrGuessCheck = usrGuessIn;
-        if (usrGuessCheck <= 0){
-            System.out.println("Not a valid number");
-            GetGuess();
+        while (true) {
+            usrGuessIn = IntInput("Enter a number between 1-100");
+            int usrGuessCheck = usrGuessIn;
+            if (usrGuessIn <= 0 || usrGuessIn > 100) {
+                System.out.println("Not a valid number");
+                continue;
+            }
+            return usrGuessIn;
         }
-        return usrGuessIn;
     }//Calls IntInput. Checks to make sure number isn't 0 or below 0
 
     public static void printHint(){
@@ -66,14 +75,27 @@ public class Main {
         }
     }//Function that tells the user if their number was too high or too low
 
-    public static boolean CheckGuess(){
+    public static boolean(int theSectretNum, int usrGuessedNum){
+        boolean trueGuess = false;
+        if (theSectretNum != usrGuessedNum){
+            userAttempt++;
+            printHint();
+        }
+        else if (theSectretNum == usrGuessedNum){
+            System.out.println("Good job! You got it correct in " + userAttempt + " attempt(s)!");
+        }
+
+
+    }
+
+    public static boolean CheckGuess2(){
         boolean trueGuess = false;
         if (userGuessedNumber != secretNumber){
             trueGuess = false;
             userAttempt++;
             printHint();
             userGuessedNumber = GetGuess();
-            CheckGuess();
+            CheckGuess2();
         }//Checks if the guess is not equal to the RNG. Adds to user attempt counter. Resets usrGuessedNumber and runs it. Re-runs CheckGuess
 
         else if (userGuessedNumber == secretNumber){
@@ -124,16 +146,4 @@ public class Main {
         }
         return name;
     }//Function for holding names
-
-    public static int IsUserValid (){
-        int checkIt = 0;
-        try {
-            checkIt =  Integer.parseInt(checkIn);
-            checkOut = checkIt;
-        } catch (NumberFormatException ex){
-            System.out.println("Invalid input");
-            GetGuess();
-        }
-        return checkIt;
-    }//Check to make sure user input is valid
 }
