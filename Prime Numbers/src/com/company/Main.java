@@ -27,12 +27,6 @@ public class Main {
                 break;
             }
 
-            if (usrIn <= 0){
-                System.out.println("Not a valid number");
-                break;
-            }
-            //Tests if user has an invalid input
-
             System.out.println("Enter a number");
             //Asks user for a second number
 
@@ -45,12 +39,6 @@ public class Main {
                     break;
                 }
 
-                if (usrInTwo <= 0){
-                    System.out.println("Not a valid number");
-                    break;
-                }
-                //Tests if user has an invalid input
-
                 int min = 0;
                 int max = 0;
                 //Creates variables to sort user inputs into
@@ -60,22 +48,17 @@ public class Main {
                         max = usrInTwo;
                 }
 
-                else if (usrIn > usrInTwo) {
+                else if (usrIn >= usrInTwo) {
                         min = usrInTwo;
                         max = usrIn;
                 }
                 //Checks which of the two inputs is higher and sorts accordingly
 
-                if (min == max){
-                    System.out.println("Numbers are the same");
-                    return;
-                }
-                //Tests if the user's inputs are the same
-
                 while (max >= min) {
                     boolean flag = false;
 
-                    if (min == 1){
+
+                    if (min <= 1){
                         flag = true;
                     }
                     //1 is not a prime number
