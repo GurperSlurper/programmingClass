@@ -1,17 +1,9 @@
 package com.company;
 
-import com.sun.corba.se.spi.orbutil.fsm.Input;
-
 import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
-
-    //public static String userName = Name(); //Asks for a name from the user
-   // public  static int secretNumber = GenerateNumber(); //Generates number
-   // public static int userGuessedNumber = GetGuess(); //Gets a number from the user
-   public static int userAttempt = 1; //Initializes the user attempt counter
-    public static String checkIn;// Used in IsUserValid function, input of
 
     //Test for Name left empty
     //Test for non number entered to guess
@@ -20,15 +12,37 @@ public class Main {
     //Test all outputs
 
     public static void main(String[] args) {
-        CheckGuess(); //Runs the check guess function
+       while (true) {
+           boolean looper = false;
+           String usrName = Name();//Asks for name
+           int theSecretNum = GenerateNumber();//Creates RNG
+           int usrAttempt = 1;//Initializes the user attempts
+           while (looper == false) {
+               boolean check = CheckGuess(GetGuess(), theSecretNum);// asks for user guess
+               if (check == true) {
+                   System.out.println("Good job " + usrName + "! You got it in " + usrAttempt + " tries!");
+                   boolean checkAgain = PlayAgain();//If the user got it right asks if the want to play again
+                   if (checkAgain == true) {
+                       looper = true;//Returns to main loop
+                   }
+                   if (checkAgain == false){
+                       System.out.println("Goodbye");
+                       System.exit(0);//exits
+                   }
+               }
+               else if (check == false) {
+                   usrAttempt++;
+                   continue;//returns to nested loop
+               }
+               continue;//returns to main loop
+           }
+       }
     }
 
     public static String Input(String prompt){
         Scanner scanner = new Scanner(System.in);
         System.out.println(prompt);
         String usrIn = scanner.nextLine();
-        checkIn = usrIn;
-       // IsUserValid();
         return usrIn;
     }//Function that asks for the user input. Runs a check to make sure that the input is valid
 
@@ -44,7 +58,6 @@ public class Main {
             }
         }
         //usrIntIn = checkOut;
-
     }//Calls to Input
 
     public static int GenerateNumber(){
@@ -57,7 +70,6 @@ public class Main {
         int usrGuessIn = 0;
         while (true) {
             usrGuessIn = IntInput("Enter a number between 1-100");
-            int usrGuessCheck = usrGuessIn;
             if (usrGuessIn <= 0 || usrGuessIn > 100) {
                 System.out.println("Not a valid number");
                 continue;
@@ -66,84 +78,52 @@ public class Main {
         }
     }//Calls IntInput. Checks to make sure number isn't 0 or below 0
 
-    public static void printHint(){
-        if (userGuessedNumber < secretNumber){
+    public static void printHint(int userGuessedNum, int theSecretNum){
+        if (userGuessedNum < theSecretNum){
             System.out.println("Number was too small");
         }
-        if (userGuessedNumber > secretNumber){
+        if (userGuessedNum > theSecretNum){
             System.out.println("Number was too large");
         }
     }//Function that tells the user if their number was too high or too low
 
-    public static boolean(int theSectretNum, int usrGuessedNum){
+    public static boolean CheckGuess (int theSectretNum, int usrGuessedNum){
         boolean trueGuess = false;
         if (theSectretNum != usrGuessedNum){
-            userAttempt++;
-            printHint();
+            printHint(theSectretNum, usrGuessedNum);
         }
-        else if (theSectretNum == usrGuessedNum){
-            System.out.println("Good job! You got it correct in " + userAttempt + " attempt(s)!");
-        }
-
-
-    }
-
-    public static boolean CheckGuess2(){
-        boolean trueGuess = false;
-        if (userGuessedNumber != secretNumber){
-            trueGuess = false;
-            userAttempt++;
-            printHint();
-            userGuessedNumber = GetGuess();
-            CheckGuess2();
-        }//Checks if the guess is not equal to the RNG. Adds to user attempt counter. Resets usrGuessedNumber and runs it. Re-runs CheckGuess
-
-        else if (userGuessedNumber == secretNumber){
+        if (theSectretNum == usrGuessedNum){
             trueGuess = true;
-            System.out.println("Good job " + userName + "! You got it correct in " + userAttempt + " attempt(s)!");
-            String check = PlayAgain();//Runs PlayAgain function
-            if (check.equalsIgnoreCase("yes") || check.equalsIgnoreCase("y")){
-                Game();
-            }//If user answers yes to PlayAgain then runs Game function
-            else if (check.equalsIgnoreCase("no") || check.equalsIgnoreCase("n")){
-                System.out.println("Goodbye");
-                System.exit(0);
-            }//If user answers no to PlayAgain ends code
-        }//Checks if the guess is same as RNG. Tells the user they got it right and in how many attempts.
+        }
         return trueGuess;
-    }
+    }//Checks if the user's guess is correct
 
-    public static String PlayAgain(){
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Do you want to play again?");
-        String usrRply = scanner.nextLine();
-        if (usrRply.isEmpty()){
-            System.out.println("Field empty");
-            PlayAgain();
-        }//Makes sure the Play again field is filled
-        else if (!usrRply.equalsIgnoreCase("y") & !usrRply.equalsIgnoreCase("n") & !usrRply.equalsIgnoreCase("yes") & !usrRply.equalsIgnoreCase("no")){
-            System.out.println("Not a valid response");
-            PlayAgain();
-        }//Makes sure it is a valid response
-        return usrRply;
+    public static boolean PlayAgain(){
+        boolean check = false;
+        while (true) {
+            String usrRply = Input("Do you want to play again?");
+            if (usrRply.equalsIgnoreCase("yes") || usrRply.equalsIgnoreCase("y")) {
+                check = true;
+            }
+            if (usrRply.equalsIgnoreCase("no") || usrRply.equalsIgnoreCase("n")) {
+                check = false;
+            }
+            if (!usrRply.equalsIgnoreCase("no") & !usrRply.equalsIgnoreCase("n") & !usrRply.equalsIgnoreCase("yes") & !usrRply.equalsIgnoreCase("y")) {
+                System.out.println("Invalid input");
+                continue;
+            }
+            return check;
+        }
     }//Asks the user if they want to play again
 
-    public static void Game(){
-        userName = Name();
-        userAttempt = 0;
-        secretNumber = GenerateNumber();
-        userGuessedNumber = GetGuess();
-        CheckGuess();
-    }//Runs like main, but can be called
-
     public static String Name(){
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter your name");
-        String name = scanner.nextLine();
-        if (name.isEmpty()){
-            System.out.println("Field is empty");
-            Name();
+        String usrName = Input("Enter a name");
+        while (true) {
+            if (usrName.isEmpty()) {
+                System.out.println("Field is empty");
+                continue;
+            }
+            return usrName;
         }
-        return name;
     }//Function for holding names
 }
