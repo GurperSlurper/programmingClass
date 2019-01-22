@@ -74,6 +74,7 @@ public class Main {
                 System.out.println("Not a valid number");
                 continue;
             }
+
             return usrGuessIn;
         }
     }//Calls IntInput. Checks to make sure number isn't 0 or below 0
@@ -117,8 +118,8 @@ public class Main {
     }//Asks the user if they want to play again
 
     public static String Name(){
-        String usrName = Input("Enter a name");
         while (true) {
+            String usrName = Input("Enter a name");
             if (usrName.isEmpty()) {
                 System.out.println("Field is empty");
                 continue;
