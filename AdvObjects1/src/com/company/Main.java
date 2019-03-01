@@ -6,7 +6,7 @@ public class Main {
 
     public static void main(String[] args) {
         // write your code here
-//most of this assignment is trying to read the existing code to understand how it works,
+        //most of this assignment is trying to read the existing code to understand how it works,
         //ask a classmate or instructor if you are unsure how the code works.
         Scanner scanner = new Scanner(System.in);
 
