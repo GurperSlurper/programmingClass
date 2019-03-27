@@ -1,0 +1,310 @@
+--Test cases--
+o:Type one of the following commands:
+o:change section
+o:add section
+o:add student
+o:add assignment to student
+o:add assignment to section
+o:set score
+o:mark tardy
+o:mark absent
+o:get overall score
+o:get overall score avg
+o:get assignment score
+o:get assignment score avg
+o:get tardy count
+o:get absent count
+
+//overall cases
+
+/////test to make sure errors printed if string inputs include numbers, sans username, section, and assignment name. If int/double inputs contain non-numeric characters
+
+//end of overall cases
+
+***
+
+//add student cases
+
+/////testing add student before section to make sure program properly handles the case where there are no sections created and a different operation is called.
+i:add student
+o:enter student first name
+i:bob
+o:enter student last name
+i:joe
+o:enter student username
+i:bobjoe
+o:enter a phone number including area code as a 10 digit number
+i:1231231234
+o:There was an error with the command, operation not completed
+//should not create add a student because there are no sections added yet
+
+o:Type one of the following commands:\nchange section\nadd section\nadd student\nadd assignment to 
+student\nadd assignment to section\nset score\nmark tardy\nmark absent\nget overall score\nget overall score avg\nget assignment score\nget assignment 
+score avg\nget tardy count\nget absent count
+
+/////testing to make sure a student can be created and added to the active section
+i:add student
+o:Enter student first name
+i:david
+o:Enter student last name
+i:baker
+o:Enter student username
+i:davidbaker
+o:Enter student phone number
+i:1231231234
+o:action completed successfully
+//should see student is created and added to the pm section and the student should have the information specified absent/tardycount should be 0 and have 0 assignments assigned.
+
+o:Type one of the following commands:\nchange section\nadd section\nadd student\nadd assignment to 
+student\nadd assignment to section\nset score\nmark tardy\nmark absent\nget overall score\nget overall score avg\nget assignment score\nget assignment 
+score avg\nget tardy count\nget absent count
+
+/////testing to make sure a second student can be created and added to the active section
+i:add student
+o:Enter student first name
+i:david
+o:Enter student last name
+i:baker
+o:Enter student username
+i:davidbaker1
+o:Enter student phone number
+i:1231231234
+o:action completed successfully
+//should see student is created and added to the pm section and the student should have the information specified
+
+o:Type one of the following commands:\nchange section\nadd section\nadd student\nadd assignment to 
+student\nadd assignment to section\nset score\nmark tardy\nmark absent\nget overall score\nget overall score avg\nget assignment score\nget assignment 
+score avg\nget tardy count\nget absent count
+
+/////testing to make sure a student can be created and added to the active section
+i:add student
+o:Enter student first name
+i:bob
+o:Enter student last name
+i:joe
+o:Enter student username
+i:bob1
+o:Enter student phone number
+i:9879879876
+o:action completed successfully
+//should see student is created and added to the pm section and the student should have the information specified
+
+/////testing to make sure no two students have the same username
+i:add student
+o:Enter student first name
+i:bob
+o:Enter student last name
+i:joe
+o:Enter student username
+i:bob1
+o:Enter student phone number
+i:7775556778
+o:There was an error with the command, operation not completed...Username already exists
+//should not work as there is already an account with the same user
+
+//end of add student cases
+
+***
+
+//add section cases
+
+o:Type one of the following commands:\nchange section\nadd section\nadd student\nadd assignment to 
+student\nadd assignment to section\nset score\nmark tardy\nmark absent\nget overall score\nget overall score avg\nget assignment score\nget assignment 
+score avg\nget tardy count\nget absent count
+
+/////testing to make sure the gradebook can add sections
+i:add section
+o:Enter a section name
+i:am
+o:action completed successfully
+//should see the section created in gradebook with the name am but no students added. Current section should show "am" is active
+
+/////testing to make sure it doesnt allow you to add a section if there is already one with that sectionName
+i:add section
+o:Enter a section name
+i:am
+o:There was an error with the command, operation not completed
+//should not be added because there is already a section with that name in the gradebook
+
+///testing to make sure that the grade book can add more than one section
+i:add section
+o:Enter a section name
+i:pm
+o:action completed successfully
+//should see the section created in gradebook with the name pm but no students added. pm is currentSection
+
+//end of add section cases
+
+***
+
+//mark absent/tardy
+
+o:Type one of the following commands:\nchange section\nadd section\nadd student\nadd assignment to 
+student\nadd assignment to section\nset score\nmark tardy\nmark absent\nget overall score\nget overall score avg\nget assignment score\nget assignment 
+score avg\nget tardy count\nget absent count
+
+/////testing to make sure a student that does not exist cannot be marked absent/tardy
+i:mark absent/tardy
+o:Enter student username
+i:jeff
+o:There was an error with the command, operation not completed
+//should not complete as there is no user with the username
+
+/////testing to make sure mark absent/tardy works
+i:mark absent/tardy
+o:enter student username
+i:bob
+o:action completed successfully
+//should add a absence/tardy to student account
+
+//end of mark absent/tardy cases
+
+***
+
+//add assignment to student cases
+
+o:Type one of the following commands:\nchange section\nadd section\nadd student\nadd assignment to 
+student\nadd assignment to section\nset score\nmark tardy\nmark absent\nget overall score\nget overall score avg\nget assignment score\nget assignment 
+score avg\nget tardy count\nget absent count
+
+/////testing to make sure add assignment to student works properly
+i:add assignment to student
+o:Enter assignment name
+i:work
+o:Enter assigments points possible
+i:70
+o:Enter student username
+i:bob
+o:action completed successfully
+//Should add because there is an account for bob and no assignment with the same name
+
+/////testing to make sure it will error out if the assignment already exists
+i:add assignment to student
+o:Enter assignment name
+i:work
+o:Enter assignments points possible
+i:70
+o:Enter student username
+i:bob
+o:There was an error with the command, operation could not be completed...Assignment already assigned
+//should not work as the assignment has already been inputted to this specific user
+
+/////testing to make sure system will error out if the user does not exist
+i:add assignment to student
+o:Enter assignment name
+i:work
+o:Enter assignments points possible
+i:70
+o:Enter student username
+i:jeff
+o:There was an error with this command, operation could not be completed...User does not exist
+//should not work as user was never created
+
+/////testing to make sure that points possible is not empty/less than 0
+i:add assignment to student
+o:Enter assignment name
+i:work2
+o:Enter assignments points possible
+i:    || -1
+o:Enter student username
+i:bob
+o:There was an error with the command, operation could not be completed...Assignment points empty/less than 0
+//should not work as the assignment needs a point value
+
+
+//end of add assignment to students cases
+
+***
+
+//add assignment to section cases
+
+o:Type one of the following commands:\nchange section\nadd section\nadd student\nadd assignment to 
+student\nadd assignment to section\nset score\nmark tardy\nmark absent\nget overall score\nget overall score avg\nget assignment score\nget assignment 
+score avg\nget tardy count\nget absent count
+
+/////testing to make sure that add assignment to section will work properly
+//inside section pm, 3 students, none have any assigned work
+i:add assignment to section
+o:Enter assignment name
+i:work
+o:Enter points possible
+i:70
+o:action completed successfully
+//should work because there are no conflicts
+
+/////testing to make sure the system will error if one student has the assignment
+////inside section pm, 3 students, one has the assignment already
+i:add assignment to section
+o:Enter assignment name
+i:work1
+o:Enter points possible
+i:70
+o:There was an error with the command, operation could not be completed...A student in the section already has the assignment
+//should not work as a student already has the assignment
+
+/////testing to make sure the system will error if one student has the assignment
+////inside section pm, 3 students, all students have the assignment
+i:add assignment to section
+o:Enter assignment name
+i:work
+o:Enter points possible
+i:70
+o:There was an error with the command, operation could not be completed...A student in the section already has the assignment
+//should not work as a student already has the assignment
+
+/////adapt points case from add to student
+//should not work if value is empty/less than 0
+
+/////testing to make sure system will error if no section
+i:add assignment to section
+o:Enter assignment name
+i:work
+o:Enter points possible
+i:70
+o:There was an error with the command, operation could not be completed...No section
+//should not work as there is no section
+
+//end of add assignment to section cases
+
+***
+
+//set score cases
+
+o:Type one of the following commands:\nchange section\nadd section\nadd student\nadd assignment to 
+student\nadd assignment to section\nset score\nmark tardy\nmark absent\nget overall score\nget overall score avg\nget assignment score\nget assignment 
+score avg\nget tardy count\nget absent count
+
+/////test to make sure test score works properly
+i:set score
+o:Enter student username
+i:bob
+o:Enter assignment name
+i:work
+o:Enter points earned
+i:12.5
+o:action completed successfully
+//should work as user and assignment exists, as well the points are valid
+
+/////test to makes sure system errors out if user doesnt exist
+i:set score
+o:Enter student username
+i:jeff
+o:Enter assignment name
+i:work
+o:Enter points earned
+i:12.5
+o:There was an error with this command, operation could not be completed...User does not exist
+//should not work as user does not exist
+
+/////test to makes sure system errors out if assignment does not exist
+i:set score
+o:Enter student username
+i:bob
+o:Enter assignment name
+i:fakeWork
+o:Enter points earned
+i:12.5
+o:There was an error with this command, operation could not be completed...Assignment does not exist
+//should not work as the assignment doesnt exist
+
+/////test to make sure 
