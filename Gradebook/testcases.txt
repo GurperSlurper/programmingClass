@@ -143,6 +143,13 @@ o:Type one of the following commands:\nchange section\nadd section\nadd student\
 student\nadd assignment to section\nset score\nmark tardy\nmark absent\nget overall score\nget overall score avg\nget assignment score\nget assignment 
 score avg\nget tardy count\nget absent count
 
+/////test to make sure if there is no section will error
+i:mark absent/tardy
+o:Enter student username
+i:jeff
+o:There was an error with the command, operation not completed
+//No section = no work
+
 /////testing to make sure a student that does not exist cannot be marked absent/tardy
 i:mark absent/tardy
 o:Enter student username
@@ -307,4 +314,133 @@ i:12.5
 o:There was an error with this command, operation could not be completed...Assignment does not exist
 //should not work as the assignment doesnt exist
 
-/////test to make sure 
+/////test to make sure system will error if ther is no section
+i:set score
+o:Enter student username
+i:jeff
+o:Enter assignment name
+i:work
+o:Enter points earned
+i:12.5
+o:There was an error with this command, operation could not be completed...Section does not exist/no section selected
+//should not work without section
+
+//end of set score
+
+***
+
+//get overall cases
+
+o:Type one of the following commands:\nchange section\nadd section\nadd student\nadd assignment to 
+student\nadd assignment to section\nset score\nmark tardy\nmark absent\nget overall score\nget overall score avg\nget assignment score\nget assignment 
+score avg\nget tardy count\nget absent count
+
+/////test to make sure it works
+i:get overall
+o:Enter student username
+i:jeff
+o:[student overall]/[points possible]
+//should work as there is a user and they have assignments
+
+/////test for error when student does not exist
+i:get overall
+o:Enter student username
+i:fakeUser
+o:There was an error with this command, operation could not be completed...Student does not exist
+//should not work as there is no user
+
+/////test for if there are no assignments
+i:get overall
+o:Enter student username
+i:userWithoutWork
+o:There was an error with this command, operation could not be completed...Student has no work
+//should not work as student specified has no work
+
+/////test if there is no section
+i:get overall
+o:Enter student username
+i:Jeff
+o:There was an error with this command, operation could not be completed...Section does not exist
+//should not work as there is no section
+
+//end of get overall
+
+***
+
+//get overall average cases
+
+o:Type one of the following commands:\nchange section\nadd section\nadd student\nadd assignment to 
+student\nadd assignment to section\nset score\nmark tardy\nmark absent\nget overall score\nget overall score avg\nget assignment score\nget assignment 
+score avg\nget tardy count\nget absent count
+
+/////test to make sure it works
+i:get overall score avg
+o:[average for section]
+//should work if section is real and there are students and assignments
+
+////test if any part does not exist
+i:get overall score avg
+o:There was an error with this command, operation could not be completed...Section does not exist/No students/No assignments
+//should not work if any of those are missing
+
+//end of get overall score avg
+
+***
+
+//get assigment score cases
+
+o:Type one of the following commands:\nchange section\nadd section\nadd student\nadd assignment to 
+student\nadd assignment to section\nset score\nmark tardy\nmark absent\nget overall score\nget overall score avg\nget assignment score\nget assignment 
+score avg\nget tardy count\nget absent count
+
+/////test to make sure it works
+i:get assigment score
+o:Enter Student username
+i:Jeff
+o:Enter assignment name
+i:work
+o:[score earned in %]
+//should work if there is student, section, and assigment
+
+/////test for if user does not exist
+i:get assigment score
+o:Enter Student username
+i:fakeUser
+o:Enter assignment name
+i:work
+o:There was an error with this command, operation could not be completed...Student does not exist
+//should not work since the student is not real
+
+/////test if no section
+i:get assigment score
+o:Enter student username
+i:Jeff
+o:Enter assignment name
+i:work
+o:There was an error with this command, operation could not be completed...Section does not exist
+//should not work as there is no section
+
+/////test if assignment does not exist
+i:get assigment score
+o:Enter student username
+i:Jeff
+o:Enter assignment name
+i:fakeWork
+o:There was an error with this command, operation could not be completed...Assignment does not exist
+//should not work as assignment does not exist
+
+//end of get assignment score
+
+***
+
+//adapt cases from overall avg to get assignment score avg
+
+***
+
+//get absent/tardy count
+
+o:Type one of the following commands:\nchange section\nadd section\nadd student\nadd assignment to 
+student\nadd assignment to section\nset score\nmark tardy\nmark absent\nget overall score\nget overall score avg\nget assignment score\nget assignment 
+score avg\nget tardy count\nget absent count
+
+adapt from mark
