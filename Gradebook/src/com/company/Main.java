@@ -27,6 +27,8 @@ public class Main {
         //main loop to get input:
         while(true){
             //print options
+            System.out.println("Currently in section:");
+            gradebook.displaySection();
             System.out.println("Type one of the following commands:");
             for(int i=0; i<options.length;i++){
                 System.out.println(options[i]);
@@ -44,8 +46,8 @@ public class Main {
             double retDouble =-1;
             if(optionSelectIndex == 0){
                 System.out.println("Enter a section name");
-                String sectionName= console.nextLine();
-                retBool=gradebook.changeSection(sectionName);
+                String sectionName = console.nextLine();
+                retBool = gradebook.changeSection(sectionName);
             }
             else if(optionSelectIndex == 1){
                 System.out.println("Enter a section name");
